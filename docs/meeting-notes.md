@@ -97,3 +97,87 @@
 ### 【今後の会議について】
 - しばらくチャットベースで進行
 - 必要に応じてオンラインでの会議を定例化
+
+# 10/18(金) 議事録
+
+## Javaの基本的なディレクトリ構造
+- **Entity**
+- **Controller**
+- **Service**
+- **Repository**
+
+## React
+- モノリシック開発: APIを使用する
+
+## ディレクトリ構造
+### バックエンド
+- **User**
+  - `/signup`
+  - `/registration`
+  - `/profile`
+- **Group**
+  - `/group`
+- **Post**
+  - `/home`
+  - `/home(2)`
+- **Project**
+  - `/my-projects`
+  - `/my-projects(編集)`
+- **Matching**
+  - `/match`
+  - `/match_front-back`
+  - `/match_level`
+  - `/match_select-project`
+  - `/match_success`
+  - `/match_failure`
+- **Validation**
+  - バリデーション関連
+- **IndexController**
+  - `/login`
+  - `/logout`
+
+### フロントエンド
+- **error**
+  - エラー時に返す画面
+- **fragments**
+  - Thymeleafテンプレートエンジンを使用したHTMLのレイアウトテンプレート
+- **User**
+- **Group**
+- **Post**
+- **Project**
+- **Matching**
+- **login**
+- **logout**
+
+### 設定関連
+- `application.properties`
+  - 各種設定を定義
+- `data.sql`
+  - 初期データを投入する場合に使用
+- `mybatis-config.xml`
+  - キャッシュの有効化、ログの有効化
+- `schema.sql`
+  - テーブルのSQLを定義
+
+> DockerやAWSに関する記載位置については、別途確認が必要。
+
+---
+
+## クラス図
+- **ディレクトリ構造の説明(フロント、バックエンド両方)**を考える
+  - 課題: 担当画面で発生する挙動をすべて洗い出して言語化する
+
+### 担当者
+- **User** (`/signup`, `/registration`, `/profile`): mikuさん
+- **Group** (`/group`): mikuさん
+- **Post** (`/home`, `/home(2)`): gao
+- **Project** (`/my-projects`, `/my-projects(編集)`): gao
+- **Matching** (`/match`, `/match_front-back`, `/match_level`, `/match_select-project`, `/match_success`, `/match_failure`): ikumoさん
+
+> 洗い出しをもとに、Entity, Controller, Service, Repositoryに細分化してコーディングを進める。
+
+---
+
+## 要検討
+- □ Reactの代案: HTML/CSS/Bootstrap/JavaScriptを使用する
+- □ Spring Bootの代案: Node.js
