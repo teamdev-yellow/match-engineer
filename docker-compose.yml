@@ -1,0 +1,54 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/match-engineer
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASS}
+    stdin_open: true
+    tty: true
+    command: ["sh", "-c", "until nc -z db 3306; do echo 'Waiting for MySQL...'; sleep 2; done; java -jar target/backend-0.0.1-SNAPSHOT.jar"]
+    depends_on:
+      - db
+    volumes:
+    - ./backend/target/classes:/app/target/classes
+    
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8.0
+    container_name: mysql-container
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    ports:
+      - ${DB_PORT}:3306
+    networks:
+      - app-network
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db_data:
